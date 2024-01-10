@@ -26,6 +26,7 @@ int main() {
     curr_x = 0;
     curr_y = 0;
     curr_angle = 0;
+    tilt = -0.2;
     ispressed = false;
 
     MatrixIDMV = glGetUniformLocation(programID, "MV");
@@ -77,6 +78,10 @@ void handleInput() {
     if (glfwGetKey(window, GLFW_KEY_A)) curr_angle -= 0.01;
     else if (glfwGetKey(window, GLFW_KEY_D)) curr_angle += 0.01;
 
+    if (glfwGetKey(window, GLFW_KEY_Q)) tilt += 0.01;
+    else if (glfwGetKey(window, GLFW_KEY_E)) tilt -= 0.01;
+
+
     handleRotationToggle();
 }
 
@@ -88,6 +93,7 @@ void handleRotationToggle() {
         ispressed = false;
     }
 }
+
 bool initializeWindow() {
     // Initialise GLFW
     if (!glfwInit()) {
@@ -153,8 +159,7 @@ void framebuffer_size_callback(GLFWwindow *, int width, int height) {
 }
 
 
-bool updateMVPTransformation()
-{
+bool updateMVPTransformation() {
     // projection matrix
     glm::mat4 projection = glm::perspective(glm::radians(30.0f), 4.0f / 3.0f, 0.1f, 10000.0f);
 
@@ -169,7 +174,7 @@ bool updateMVPTransformation()
     glm::mat4 model = glm::mat4(1.0f); //start with identity matrix
 
     //Mars tilt and rotation
-    model = glm::rotate(model, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, tilt, glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::rotate(model, curr_angle, glm::vec3(0.0f, 1.0f, 0.0f));
 
     //translation
@@ -181,6 +186,7 @@ bool updateMVPTransformation()
 
     return true;
 }
+
 bool initializeVertexBuffer() {
     glGetUniformLocation(programID, "../resources/myTextureSampler");
 

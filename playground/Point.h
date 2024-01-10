@@ -10,7 +10,7 @@ struct Point {
 
     Point(float xp, float yp, float zp) : x(xp), y(yp), z(zp) {}
 
-    [[nodiscard]] bool equals(const Point& point) const {
+    [[nodiscard]] bool equals(const Point &point) const {
         return ((x == point.x) && (y == point.y) && (z == point.z));
     }
 };

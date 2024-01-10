@@ -39,6 +39,7 @@ float cameraZoom{35};
 float curr_x;
 float curr_y;
 float curr_angle;
+float tilt;
 bool autoRotate;
 bool ispressed;
 
